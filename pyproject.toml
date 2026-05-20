@@ -1,0 +1,23 @@
+[project]
+name = "gmail-to-action-sheet"
+version = "0.1.0"
+description = "Convert business Gmail messages into a daily Google Sheet action list."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Qorvia Systems", email = "qorviasystems@gmail.com" }]
+dependencies = [
+  "google-api-python-client>=2.120.0",
+  "google-auth>=2.28.0",
+  "google-auth-oauthlib>=1.2.0",
+  "python-dotenv>=1.0.1",
+  "pandas>=2.2.0",
+  "Flask>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

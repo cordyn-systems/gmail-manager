@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gmail to Action Sheet</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <div class="header-row">
+          <p class="brand">Qorvia Systems</p>
+          <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit" class="ghost">Lock App</button>
+          </form>
+        </div>
+        <h1>Gmail to Action Sheet</h1>
+        <p class="subtitle">Find genuine appointment emails and send them to your Google Sheet.</p>
+      </div>
+    </header>
+
+    <main class="page">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="messages">
+            {% for category, message in messages %}
+              <div class="message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <section class="status-grid" aria-label="Connection status">
+        <div class="status-card">
+          <span class="status-dot {{ 'ok' if status.credentials else 'bad' }}"></span>
+          <div>
+            <strong>Google credentials</strong>
+            <p>{{ 'credentials.json found' if status.credentials else 'Upload credentials.json' }}</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-dot {{ 'ok' if status.token else 'bad' }}"></span>
+          <div>
+            <strong>Gmail connection</strong>
+            <p>{{ 'Connected' if status.token else 'Not connected' }}</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-dot {{ 'ok' if status.sheet else 'bad' }}"></span>
+          <div>
+            <strong>Google Sheet</strong>
+            <p>{{ 'Sheet ID saved' if status.sheet else 'Paste Sheet link or ID' }}</p>
+          </div>
+        </div>
+        <div class="status-card">
+          <span class="status-dot {{ 'ok' if status.ollama else 'bad' }}"></span>
+          <div>
+            <strong>Ollama</strong>
+            <p>{{ status.ollama_message }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Setup</h2>
+        <form action="{{ url_for('update_settings') }}" method="post" enctype="multipart/form-data" class="form-grid">
+          <label>
+            Google Sheet link or ID
+            <input name="google_sheet_id" value="{{ settings.google_sheet_id }}" placeholder="Paste Google Sheet URL or ID" />
+          </label>
+          <label>
+            Scan days
+            <input type="number" min="1" max="30" name="scan_days" value="{{ settings.scan_days }}" />
+          </label>
+          <label>
+            Max emails
+            <input type="number" min="1" max="500" name="max_results" value="{{ settings.max_results }}" />
+          </label>
+          <label>
+            Ollama host
+            <input name="ollama_host" value="{{ settings.ollama_host }}" />
+          </label>
+          <label>
+            Ollama model
+            <input name="ollama_model" value="{{ settings.ollama_model }}" />
+          </label>
+          <label>
+            Upload credentials.json
+            <input type="file" name="credentials_file" accept=".json" />
+          </label>
+          <div class="actions">
+            <button type="submit">Save Settings</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel action-panel">
+        <div>
+          <h2>Run</h2>
+          <p>Scan Gmail locally, review appointment emails, then write selected results to Google Sheets.</p>
+        </div>
+        <div class="button-row">
+          <form action="{{ url_for('connect_gmail') }}" method="post">
+            <button type="submit">Connect Gmail</button>
+          </form>
+          <form action="{{ url_for('sample_scan') }}" method="post">
+            <button type="submit" class="secondary">Test Sample Data</button>
+          </form>
+        </div>
+        <form action="{{ url_for('scan_gmail') }}" method="post" class="scan-form">
+          <label>
+            Scan days
+            <input type="number" min="1" max="30" name="scan_days" value="{{ settings.scan_days }}" />
+          </label>
+          <label>
+            Max emails
+            <input type="number" min="1" max="500" name="max_results" value="{{ settings.max_results }}" />
+          </label>
+          <label class="check">
+            <input type="checkbox" name="reprocess" />
+            Recheck already processed emails
+          </label>
+          <label class="check">
+            <input type="checkbox" name="reset_action_list" />
+            Clear Today Action List before writing
+          </label>
+          <button type="submit">Scan Gmail</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Privacy & Local Data</h2>
+        <div class="privacy-grid">
+          <div>
+            <h3>What stays local</h3>
+            <ul>
+              <li>Google OAuth files: <code>credentials.json</code> and <code>token.json</code></li>
+              <li>Temporary scan preview: <code>pending_results.json</code></li>
+              <li>Processed message log: <code>processed_emails.csv</code></li>
+              <li>Ollama appointment checks run on this computer</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What the app does not do</h3>
+            <ul>
+              <li>Does not send emails</li>
+              <li>Does not delete, archive, or label Gmail messages</li>
+              <li>Does not send email content to OpenAI or paid AI APIs</li>
+              <li>Does not write to any Sheet except the configured Sheet ID</li>
+            </ul>
+          </div>
+        </div>
+        <form action="{{ url_for('clear_local_data') }}" method="post" class="clear-form">
+          <label class="check">
+            <input type="checkbox" name="clear_processed_log" />
+            Clear local processed email log
+          </label>
+          <label class="check">
+            <input type="checkbox" name="clear_token" />
+            Disconnect Gmail on this computer
+          </label>
+          <label class="check">
+            <input type="checkbox" name="clear_credentials" />
+            Remove uploaded Google OAuth file
+          </label>
+          <button type="submit" class="danger">Clear Selected Local Data</button>
+        </form>
+      </section>
+
+      {% if status.pending %}
+        {% set pending = status.pending %}
+        {% set stats = pending.stats %}
+        <section class="panel">
+          <div class="result-head">
+            <div>
+              <h2>Review Results</h2>
+              <p>
+                Read {{ stats.read }} emails,
+                found {{ stats.appointments }} appointment actions,
+                ignored {{ stats.ignored }},
+                skipped {{ stats.duplicates }} duplicates.
+              </p>
+            </div>
+            {% if not stats.sample %}
+              <form action="{{ url_for('write_results') }}" method="post">
+                <button type="submit">Write to Google Sheet</button>
+              </form>
+            {% endif %}
+          </div>
+
+          {% if pending.action_items %}
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Priority</th>
+                    <th>Customer</th>
+                    <th>Subject</th>
+                    <th>Summary</th>
+                    <th>Pending Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in pending.action_items %}
+                    <tr>
+                      <td><span class="priority {{ item.priority|lower }}">{{ item.priority }}</span></td>
+                      <td>{{ item.customer_name }}<br /><small>{{ item.customer_email }}</small></td>
+                      <td>{{ item.subject }}</td>
+                      <td>{{ item.summary }}</td>
+                      <td>{{ item.pending_action }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p class="empty">No genuine appointment emails found in this scan.</p>
+          {% endif %}
+        </section>
+      {% endif %}
+    </main>
+  </body>
+</html>

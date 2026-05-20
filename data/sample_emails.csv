@@ -1,0 +1,7 @@
+message_id,received_at,sender_name,sender_email,subject,snippet,body_preview,is_unread
+sample-001,2026-05-08T09:15:00+05:30,Asha Mehta,asha@example.com,Need appointment today,Can I book an appointment slot for today afternoon?,Please let me know availability.,true
+sample-002,2026-05-08T10:20:00+05:30,Rohan Shah,rohan@example.com,Payment pending for invoice,The payment is pending and I need the receipt after paying the bill.,Invoice follow up for last consultation.,false
+sample-003,2026-05-08T11:05:00+05:30,Neha Rao,neha@example.com,Complaint about delay,I am unhappy because there has been no response and a long delay.,Please resolve this issue urgently.,true
+sample-004,2026-05-08T12:00:00+05:30,Vikram Jain,vikram@example.com,Interested in your service,I would like details and price information for your coaching service.,Please share quote and next steps.,false
+sample-005,2026-05-08T13:30:00+05:30,Newsletter Bot,no-reply@newsletter.example.com,Weekly business tips,Here are some general information updates for this week.,No action required.,false
+

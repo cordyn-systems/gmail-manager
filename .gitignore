@@ -1,0 +1,15 @@
+.env
+credentials.json
+token.json
+*.token
+processed_emails.csv
+output_action_list.csv
+web_settings.json
+pending_results.json
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+*.pyc
+*.pyo
+.DS_Store
