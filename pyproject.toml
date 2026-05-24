@@ -5,7 +5,7 @@ description = "Convert business Gmail messages into a daily Google Sheet action 
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "Qorvia Systems", email = "qorviasystems@gmail.com" }]
+authors = [{ name = "Cordyn Systems" }]
 dependencies = [
   "google-api-python-client>=2.120.0",
   "google-auth>=2.28.0",

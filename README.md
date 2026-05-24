@@ -1,107 +1,184 @@
-# Gmail to Action Sheet
+# Gmail Manager: Business Signal-to-Action Engine
 
-Convert business Gmail messages into a daily Google Sheet action list.
+Most small businesses do not need another dashboard.
 
-Gmail to Action Sheet is an open-source MVP by Qorvia Systems. It reads recent business Gmail messages in read-only mode, uses local Ollama to detect appointment-related emails, and writes only appointment action items into Google Sheets.
+They need a simple way to notice what is slipping through the cracks.
 
-## Use Case
+Gmail Manager is an open-source experiment by **Cordyn Systems** that converts business Gmail messages into structured operational actions.
 
-This project is for small businesses, clinics, coaching centers, consultants, and service providers that receive customer messages through Gmail and need a clear daily follow-up list.
+The first version focuses on appointment-related signals using local Ollama/Gemma classification and Google Sheet output. The larger direction is a lightweight business signal-to-action layer for small and mid-sized businesses.
 
-## What It Does
+## Why this matters
 
-- Connects to Gmail with the Gmail API using read-only access.
-- Reads emails from the last N days. The default is 1 day.
-- Extracts message ID, received date, sender, subject, and snippet/body preview.
-- Uses local Ollama to decide whether each email is appointment-related.
-- Generates a short summary, pending action, and priority.
-- Writes only appointment-related rows into a Google Sheet.
-- Avoids duplicate processing using Gmail message IDs.
-- Maintains a processed email log.
-- Includes sample mode for testing without Google credentials.
+Small businesses receive important operational signals every day:
 
-## What It Does Not Do
+- a customer asking for an appointment
+- a booking request waiting for confirmation
+- a missed follow-up
+- a complaint that needs attention
+- a customer asking to call or meet
+- a payment or service message requiring action
+
+These signals often remain buried inside inboxes.
+
+This project explores how local AI can extract useful business intent from Gmail and convert it into a daily action sheet.
+
+## What it does
+
+- Reads recent Gmail messages using the Gmail API with read-only access.
+- Uses local Ollama/Gemma to identify appointment-related business signals.
+- Filters obvious automated emails before local AI review.
+- Shows appointment actions in a local browser app before writing to Sheets.
+- Writes approved rows to a configured Google Sheet.
+- Tracks processed Gmail message IDs to avoid duplicates.
+- Provides one-click local install/start/stop scripts for macOS and Windows.
+
+## What it does not do
 
 - Does not send emails.
 - Does not delete emails.
+- Does not archive Gmail messages.
 - Does not modify Gmail labels.
-- Does not archive messages.
 - Does not change anything inside Gmail.
-- Does not act as a CRM.
+- Does not send email content to OpenAI or paid AI APIs.
+- Does not act as a full CRM.
 
-## Project Structure
+## Screenshots
+
+### Local Browser App
+
+![Dashboard](docs/dashboard.png)
+
+### Preview Before Writing to Sheet
+
+![Preview](docs/preview.png)
+
+### Google Sheet Output
+
+![Sheet Output](docs/sheet-output.png)
+
+## Signal Filtering
+
+The current MVP focuses on appointment-related business signals.
+
+This is intentional: appointment workflows are common across clinics, coaching centers, consultants, service providers, salons, repair centers, and small offices.
+
+Future versions can extend the same signal-to-action pipeline to other business signals:
+
+- revenue enquiries
+- payment follow-ups
+- service risk messages
+- response gaps
+- calendar events
+- WhatsApp exports
+- CCTV activity summaries
+
+## Local-first architecture
 
 ```text
-gmail-to-action-sheet/
+Gmail read-only API
+  -> automated email prefilter
+  -> local Ollama/Gemma signal classification
+  -> preview in browser app
+  -> Google Sheet action output
+  -> processed message log
+```
+
+The app is designed for local desktop use. Google OAuth files, tokens, local settings, pending previews, and processed logs stay on the user's computer and are ignored by git.
+
+## Project structure
+
+```text
+gmail-manager/
+  web_app.py
   README.md
+  TEST_PLAN.md
   LICENSE
-  .gitignore
   .env.example
   requirements.txt
   pyproject.toml
-  web_app.py
-  Start Gmail Action Sheet.command
-  Stop Gmail Action Sheet.command
-  Start Gmail Action Sheet.bat
-  Stop Gmail Action Sheet.bat
-  templates/
-    dashboard.html
-  static/
-    styles.css
+  Install Gmail Manager.command
+  Start Gmail Manager.command
+  Stop Gmail Manager.command
+  Install Gmail Manager.bat
+  Start Gmail Manager.bat
+  Stop Gmail Manager.bat
   src/
     appointment_llm.py
-    main.py
-    config.py
-    gmail_client.py
-    sheets_client.py
     classifier.py
-    models.py
+    config.py
     dedupe.py
+    gmail_client.py
+    main.py
+    models.py
     sample_runner.py
+    sheets_client.py
+  templates/
+    dashboard.html
+    login.html
+    setup_pin.html
+  static/
+    styles.css
+  docs/
+    gmail_setup.html
+    dashboard.png
+    preview.png
+    sheet-output.png
   data/
     sample_emails.csv
   tests/
-    test_classifier.py
-    test_dedupe.py
 ```
 
-## Setup
+## One-click local setup
 
-1. Create and activate a virtual environment:
+On macOS:
 
-```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
+```text
+Double-click Install Gmail Manager.command
 ```
 
-2. Install dependencies:
+On Windows:
 
-```bash
-pip install -r requirements.txt
+```text
+Double-click Install Gmail Manager.bat
 ```
 
-3. Copy the example environment file:
+The installer:
 
-```bash
-cp .env.example .env
+- creates or reuses a local Python virtual environment
+- installs dependencies
+- checks Ollama
+- opens the setup guide
+- starts the local web app
+
+The local app runs at:
+
+```text
+http://127.0.0.1:5055
 ```
 
-4. Edit `.env` if you want to set a default Google Sheet ID or custom file paths.
+## Browser app flow
 
-## Google Cloud Credential Setup
+1. Create a local PIN/password.
+2. Upload the Google OAuth JSON file.
+3. Paste a Google Sheet URL or Sheet ID.
+4. Connect Gmail through Google OAuth.
+5. Run a sample scan.
+6. Scan Gmail.
+7. Review appointment actions.
+8. Write approved rows to Google Sheets.
 
-1. Open Google Cloud Console.
-2. Create or select a project.
-3. Enable these APIs:
-   - Gmail API
-   - Google Sheets API
-4. Configure the OAuth consent screen.
-5. Create OAuth Client credentials for a Desktop app.
-6. Download the JSON credentials file.
-7. Save it in the project root as `credentials.json`.
-8. Keep `credentials.json` and `token.json` private. They are ignored by git.
+The dashboard also includes privacy notes and clear-local-data controls.
 
-The Gmail integration uses this read-only scope only:
+## Google Cloud setup
+
+The app needs:
+
+- Gmail API
+- Google Sheets API
+- OAuth Desktop App credentials
+
+The Gmail integration uses read-only scope:
 
 ```text
 https://www.googleapis.com/auth/gmail.readonly
@@ -113,9 +190,13 @@ The Sheets integration uses:
 https://www.googleapis.com/auth/spreadsheets
 ```
 
-Use the `--sheet-id` CLI option or `GOOGLE_SHEET_ID` environment variable to control which spreadsheet is updated.
+See the detailed setup guide:
 
-## Environment Variables
+[docs/gmail_setup.html](docs/gmail_setup.html)
+
+## Environment variables
+
+Copy `.env.example` to `.env` for CLI/local overrides:
 
 ```text
 GOOGLE_CREDENTIALS_FILE=credentials.json
@@ -127,118 +208,31 @@ OLLAMA_HOST=http://127.0.0.1:11434
 OLLAMA_MODEL=gemma4:e4b
 ```
 
-## Ollama Setup
+The browser app can also store these settings in its local `web_settings.json` file, which is git-ignored.
 
-This version uses a local Ollama model to keep only appointment-related emails.
+## CLI usage
 
-```bash
-ollama list
-```
+The browser app is recommended for normal users, but CLI commands remain available.
 
-Set the model in `.env`:
-
-```text
-OLLAMA_HOST=http://127.0.0.1:11434
-OLLAMA_MODEL=gemma4:e4b
-```
-
-## Browser App
-
-For non-developer use, start the local browser app.
-
-One-click install on macOS:
-
-```text
-Double-click Install Gmail Action Sheet.command
-```
-
-One-click install on Windows:
-
-```text
-Double-click Install Gmail Action Sheet.bat
-```
-
-On macOS:
-
-```text
-Double-click Start Gmail Action Sheet.command
-```
-
-On Windows:
-
-```text
-Double-click Start Gmail Action Sheet.bat
-```
-
-The app opens at:
-
-```text
-http://127.0.0.1:5055
-```
-
-The browser app lets users:
-
-- Create a local PIN/password on first run.
-- Upload the Google OAuth JSON file.
-- Paste a Google Sheet link or ID.
-- Check Gmail, Google Sheet, and Ollama connection status.
-- Connect Gmail through the browser OAuth flow.
-- Scan Gmail for genuine appointment-related messages.
-- Preview appointment rows before writing to Google Sheets.
-- Rebuild the action list while ignoring automated emails.
-- Clear local tokens, credentials, pending previews, and processed logs when needed.
-
-Stop the local app with:
-
-```text
-Stop Gmail Action Sheet.command
-```
-
-or:
-
-```text
-Stop Gmail Action Sheet.bat
-```
-
-## Sample Mode
-
-Sample mode does not require Google credentials, but it does require Ollama to be running.
+Sample mode:
 
 ```bash
-python src/main.py --mode sample
+python src/main.py --mode sample --output-csv
 ```
 
-Write the classified action list to a local CSV:
-
-```bash
-python src/main.py --mode sample --output-csv output_action_list.csv
-```
-
-## Gmail Mode
-
-Read Gmail from the last 1 day and update the configured sheet:
+Gmail mode:
 
 ```bash
 python src/main.py --mode gmail --days 1
 ```
 
-Read Gmail from the last 7 days and pass a sheet ID explicitly:
-
-```bash
-python src/main.py --mode gmail --days 7 --sheet-id <GOOGLE_SHEET_ID>
-```
-
-Rebuild the action sheet from recent emails using the appointment-only Ollama filter:
+Rebuild the action sheet from recent emails:
 
 ```bash
 python src/main.py --mode gmail --days 1 --reprocess --reset-action-list
 ```
 
-This clears existing `Today Action List` rows, rechecks recent Gmail messages with Ollama, and writes back only appointment-related rows. It does not duplicate existing `Processed Emails` rows.
-
-On first run, a browser window opens for Google OAuth consent. The local OAuth token is saved in `token.json`.
-
-## Google Sheet Tab Format
+## Google Sheet tabs
 
 The script creates or updates 3 tabs.
 
@@ -277,69 +271,61 @@ Setting
 Value
 ```
 
-Default settings:
-
-```text
-Scan Days = 1
-Business Type = Clinic / Coaching / Service
-High Priority Keywords = urgent, appointment, payment, booking, complaint, reschedule, not replied
-Ignore Senders = newsletter, promotion, no-reply
-```
-
-## Appointment Filtering
-
-The MVP uses local Ollama for appointment-only filtering. It does not use OpenAI or any paid AI API.
-
-Only emails that are truly appointment-related are added to `Today Action List`.
-
-Included examples:
-
-- booking an appointment
-- scheduling or rescheduling
-- asking for available slots or timing
-- confirming, cancelling, or changing a visit, consultation, or meeting
-- a customer asking to call or meet at a specific time
-
-Excluded examples:
-
-- newsletters
-- promotions
-- alerts
-- OTPs
-- receipts
-- invoices
-- reports
-- automatic notifications
-- payment-only emails
-- complaints without scheduling intent
-
-## Run Tests
+## Run tests
 
 ```bash
 pytest
 ```
 
+Current local suite:
+
+```text
+16 tests
+```
+
+See the detailed local test plan:
+
+[TEST_PLAN.md](TEST_PLAN.md)
+
 ## Roadmap
 
-V1:
+### V0.1 — Appointment Signal Detection
 
-- Gmail read-only reader
-- Rule-based classification
-- Google Sheet update
+- Gmail read-only connector
+- Local Ollama/Gemma signal filtering
+- Google Sheet action output
 - Duplicate prevention
+- Browser-based local app
 
-V2:
+### V0.2 — Business Signal Categories
 
-- Google Calendar integration
-- Better action extraction
-- Configurable business-specific keywords
+- Revenue signals
+- Scheduling signals
+- Cashflow signals
+- Service risk signals
+- Response gaps
 
-V3:
+### V0.3 — Google Calendar Integration
 
-- Optional local LLM/AI classification
-- Daily digest
-- Streamlit dashboard
+- Appointment cross-checking
+- Slot confirmation detection
+- Missed appointment follow-up
 
-## Support & Customization
+### V0.4 — Daily Business Digest
 
-This repository is built as an open-source experiment for practical business process automation. For customization, pilot implementation, or business workflow adaptation, contact: qorviasystems@gmail.com
+- End-of-day owner summary
+- Missed follow-up detection
+- Priority scoring
+
+### Future Direction
+
+- WhatsApp export support
+- Web form signals
+- CCTV activity summaries
+- Multi-location small-business operations assistant
+
+## Support & customization
+
+This repository is built as an open-source experiment for practical small-business process automation.
+
+For questions, ideas, or implementation discussion, open an issue on this repository.

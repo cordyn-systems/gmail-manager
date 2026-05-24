@@ -1,8 +1,8 @@
 @echo off
 cd /d "%~dp0"
 echo.
-echo Gmail to Action Sheet installer
-echo Qorvia Systems
+echo Gmail Manager installer
+echo Cordyn Systems
 echo --------------------------------
 
 where python >nul 2>nul
@@ -23,7 +23,7 @@ venv\Scripts\pip install -r requirements.txt
 echo Checking Ollama...
 where ollama >nul 2>nul
 if errorlevel 1 (
-  echo Ollama was not found. Install Ollama before using appointment AI filtering.
+  echo Ollama was not found. Install Ollama before using local signal filtering.
 ) else (
   ollama list
 )
@@ -35,8 +35,7 @@ start http://127.0.0.1:5055
 echo.
 echo Install complete.
 echo The local app is starting at http://127.0.0.1:5055
-echo Use Stop Gmail Action Sheet.bat to stop it.
+echo Use Stop Gmail Manager.bat to stop it.
 echo.
 
 venv\Scripts\python web_app.py
-

@@ -4,8 +4,8 @@ set -e
 cd "$(dirname "$0")"
 
 echo ""
-echo "Gmail to Action Sheet installer"
-echo "Qorvia Systems"
+echo "Gmail Manager installer"
+echo "Cordyn Systems"
 echo "--------------------------------"
 
 if ! command -v python3 >/dev/null 2>&1; then
@@ -25,7 +25,7 @@ echo "Checking Ollama..."
 if command -v ollama >/dev/null 2>&1; then
   ollama list || true
 else
-  echo "Ollama was not found. Install Ollama before using appointment AI filtering."
+  echo "Ollama was not found. Install Ollama before using local signal filtering."
 fi
 
 echo "Opening setup guide and local app..."
@@ -35,8 +35,7 @@ open "http://127.0.0.1:5055" || true
 echo ""
 echo "Install complete."
 echo "The local app is starting at http://127.0.0.1:5055"
-echo "Use Stop Gmail Action Sheet.command to stop it."
+echo "Use Stop Gmail Manager.command to stop it."
 echo ""
 
 venv/bin/python web_app.py
-

@@ -3,20 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gmail to Action Sheet</title>
+    <title>Gmail Manager</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
   </head>
   <body>
     <header class="topbar">
       <div>
         <div class="header-row">
-          <p class="brand">Qorvia Systems</p>
+          <p class="brand">Cordyn Systems</p>
           <form action="{{ url_for('logout') }}" method="post">
             <button type="submit" class="ghost">Lock App</button>
           </form>
         </div>
-        <h1>Gmail to Action Sheet</h1>
-        <p class="subtitle">Find genuine appointment emails and send them to your Google Sheet.</p>
+        <h1>Gmail Manager</h1>
+        <p class="subtitle">Turn Gmail business signals into reviewable action rows.</p>
       </div>
     </header>
 
@@ -98,7 +98,7 @@
       <section class="panel action-panel">
         <div>
           <h2>Run</h2>
-          <p>Scan Gmail locally, review appointment emails, then write selected results to Google Sheets.</p>
+          <p>Scan Gmail locally, review appointment signals, then write selected results to Google Sheets.</p>
         </div>
         <div class="button-row">
           <form action="{{ url_for('connect_gmail') }}" method="post">

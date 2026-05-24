@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <rect width="1440" height="900" fill="#f3f6f8"/>
+  <rect width="1440" height="190" fill="#115e59"/>
+  <text x="120" y="72" fill="#bff5ee" font-family="Arial" font-size="22" font-weight="700" letter-spacing="2">CORDYN SYSTEMS</text>
+  <text x="120" y="132" fill="#ffffff" font-family="Arial" font-size="58" font-weight="800">Gmail Manager</text>
+  <text x="120" y="170" fill="#ddfffb" font-family="Arial" font-size="25">Turn Gmail business signals into reviewable action rows.</text>
+
+  <g transform="translate(120 235)">
+    <g>
+      <rect width="270" height="110" rx="8" fill="#ffffff" stroke="#dbe3ea"/>
+      <circle cx="34" cy="34" r="10" fill="#12805c"/>
+      <text x="56" y="38" fill="#1f2933" font-family="Arial" font-size="23" font-weight="700">Google credentials</text>
+      <text x="56" y="72" fill="#607080" font-family="Arial" font-size="20">credentials.json found</text>
+    </g>
+    <g transform="translate(290 0)">
+      <rect width="270" height="110" rx="8" fill="#ffffff" stroke="#dbe3ea"/>
+      <circle cx="34" cy="34" r="10" fill="#12805c"/>
+      <text x="56" y="38" fill="#1f2933" font-family="Arial" font-size="23" font-weight="700">Gmail connection</text>
+      <text x="56" y="72" fill="#607080" font-family="Arial" font-size="20">Connected</text>
+    </g>
+    <g transform="translate(580 0)">
+      <rect width="270" height="110" rx="8" fill="#ffffff" stroke="#dbe3ea"/>
+      <circle cx="34" cy="34" r="10" fill="#12805c"/>
+      <text x="56" y="38" fill="#1f2933" font-family="Arial" font-size="23" font-weight="700">Google Sheet</text>
+      <text x="56" y="72" fill="#607080" font-family="Arial" font-size="20">Sheet ID saved</text>
+    </g>
+    <g transform="translate(870 0)">
+      <rect width="270" height="110" rx="8" fill="#ffffff" stroke="#dbe3ea"/>
+      <circle cx="34" cy="34" r="10" fill="#12805c"/>
+      <text x="56" y="38" fill="#1f2933" font-family="Arial" font-size="23" font-weight="700">Ollama</text>
+      <text x="56" y="72" fill="#607080" font-family="Arial" font-size="20">gemma4:e4b</text>
+    </g>
+  </g>
+
+  <g transform="translate(120 390)">
+    <rect width="1200" height="220" rx="8" fill="#ffffff" stroke="#dbe3ea"/>
+    <text x="30" y="48" fill="#1f2933" font-family="Arial" font-size="30" font-weight="800">Setup</text>
+    <rect x="30" y="80" width="520" height="58" rx="7" fill="#ffffff" stroke="#cbd5df"/>
+    <text x="48" y="116" fill="#607080" font-family="Arial" font-size="20">Google Sheet link or ID</text>
+    <rect x="580" y="80" width="210" height="58" rx="7" fill="#ffffff" stroke="#cbd5df"/>
+    <text x="598" y="116" fill="#607080" font-family="Arial" font-size="20">Scan days: 1</text>
+    <rect x="820" y="80" width="210" height="58" rx="7" fill="#ffffff" stroke="#cbd5df"/>
+    <text x="838" y="116" fill="#607080" font-family="Arial" font-size="20">Max emails: 100</text>
+    <rect x="30" y="154" width="220" height="46" rx="7" fill="#0f766e"/>
+    <text x="66" y="184" fill="#ffffff" font-family="Arial" font-size="20" font-weight="800">Save Settings</text>
+  </g>
+
+  <g transform="translate(120 645)">
+    <rect width="1200" height="155" rx="8" fill="#ffffff" stroke="#dbe3ea"/>
+    <text x="30" y="48" fill="#1f2933" font-family="Arial" font-size="30" font-weight="800">Run</text>
+    <text x="30" y="83" fill="#607080" font-family="Arial" font-size="22">Scan Gmail locally, review appointment signals, then write selected results.</text>
+    <rect x="30" y="102" width="170" height="46" rx="7" fill="#0f766e"/>
+    <text x="58" y="132" fill="#ffffff" font-family="Arial" font-size="20" font-weight="800">Connect Gmail</text>
+    <rect x="220" y="102" width="190" height="46" rx="7" fill="#dff7f3"/>
+    <text x="247" y="132" fill="#115e59" font-family="Arial" font-size="20" font-weight="800">Test Sample Data</text>
+    <rect x="430" y="102" width="145" height="46" rx="7" fill="#0f766e"/>
+    <text x="458" y="132" fill="#ffffff" font-family="Arial" font-size="20" font-weight="800">Scan Gmail</text>
+  </g>
+</svg>
+

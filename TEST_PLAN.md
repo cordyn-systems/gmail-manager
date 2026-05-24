@@ -80,10 +80,10 @@ Current expected count:
 
 Regression coverage includes:
 
-- rule-based automated email detection
+- automated email detection
 - dedupe log behavior
 - Gmail HTML body extraction
-- appointment-only row building
+- appointment signal row building
 - Sheet URL extraction
 
 ## 5. Install Flow Test
@@ -95,7 +95,7 @@ Steps:
 1. Double-click:
 
 ```text
-Install Gmail Action Sheet.command
+Install Gmail Manager.command
 ```
 
 2. Confirm Terminal opens.
@@ -119,7 +119,7 @@ Steps:
 2. Double-click:
 
 ```text
-Start Gmail Action Sheet.command
+Start Gmail Manager.command
 ```
 
 Expected result:
@@ -134,7 +134,7 @@ Steps:
 1. Double-click:
 
 ```text
-Stop Gmail Action Sheet.command
+Stop Gmail Manager.command
 ```
 
 2. Visit `http://127.0.0.1:5055`.

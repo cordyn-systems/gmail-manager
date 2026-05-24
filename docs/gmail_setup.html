@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gmail Setup Guide | Gmail to Action Sheet</title>
+    <title>Gmail Setup Guide | Gmail Manager</title>
     <style>
       :root {
         color-scheme: light;
@@ -238,8 +238,8 @@
   <body>
     <header>
       <div class="wrap">
-        <p class="brand">Qorvia Systems</p>
-        <h1>Gmail Setup Guide for Gmail to Action Sheet</h1>
+        <p class="brand">Cordyn Systems</p>
+        <h1>Gmail Setup Guide for Gmail Manager</h1>
         <p class="subtitle">
           A practical step-by-step setup guide for connecting the MVP to Gmail
           in read-only mode and writing action items to one Google Sheet.
@@ -274,7 +274,7 @@
           <li>A Google account with Gmail enabled.</li>
           <li>Access to Google Cloud Console.</li>
           <li>Python 3.11 or newer installed locally.</li>
-          <li>The Gmail to Action Sheet project on your machine.</li>
+          <li>The Gmail Manager project on your machine.</li>
         </ul>
         <div class="callout safe">
           <strong>Security intent</strong>
@@ -287,17 +287,17 @@
         <h2>2. Quick Setup Path</h2>
         <p>
           This quick path is adapted from the local SpendLens setup notes and
-          adjusted for Gmail to Action Sheet.
+          adjusted for Gmail Manager.
         </p>
         <ol>
           <li>Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noreferrer">console.cloud.google.com</a>.</li>
           <li>Click <strong>Select a project</strong>, then <strong>New Project</strong>.</li>
-          <li>Name the project <code>Gmail to Action Sheet</code>.</li>
+          <li>Name the project <code>Gmail Manager</code>.</li>
           <li>Enable the <strong>Gmail API</strong>.</li>
           <li>Enable the <strong>Google Sheets API</strong>.</li>
           <li>Create an <strong>OAuth 2.0 Client ID</strong>.</li>
           <li>Choose application type <strong>Desktop app</strong>.</li>
-          <li>Name it <code>Gmail to Action Sheet Local</code>.</li>
+          <li>Name it <code>Gmail Manager Local</code>.</li>
           <li>Download the OAuth JSON file.</li>
           <li>Rename it to <code>credentials.json</code>.</li>
           <li>Place it in the project root folder.</li>
@@ -323,7 +323,7 @@
           </li>
           <li>Click the project selector near the top of the page.</li>
           <li>Click <strong>New Project</strong>.</li>
-          <li>Use a clear name, such as <code>Gmail to Action Sheet</code>.</li>
+          <li>Use a clear name, such as <code>Gmail Manager</code>.</li>
           <li>Click <strong>Create</strong>.</li>
           <li>Make sure the new project is selected before continuing.</li>
         </ol>
@@ -362,7 +362,7 @@
         <ol>
           <li>Open <strong>Google Auth Platform</strong> or <strong>APIs & Services &gt; OAuth consent screen</strong>.</li>
           <li>If prompted, click <strong>Get Started</strong>.</li>
-          <li>For app name, enter <code>Gmail to Action Sheet</code>.</li>
+          <li>For app name, enter <code>Gmail Manager</code>.</li>
           <li>Choose your user support email.</li>
           <li>
             For audience/user type:
@@ -389,7 +389,7 @@
           <li>Click <strong>Create Credentials</strong>.</li>
           <li>Select <strong>OAuth client ID</strong>.</li>
           <li>For application type, choose <strong>Desktop app</strong>.</li>
-          <li>Name it <code>Gmail to Action Sheet Local</code>.</li>
+          <li>Name it <code>Gmail Manager Local</code>.</li>
           <li>Click <strong>Create</strong>.</li>
           <li>Click <strong>Download JSON</strong>.</li>
         </ol>
@@ -418,7 +418,7 @@
         <ol>
           <li>Open <a href="https://sheets.google.com/" target="_blank" rel="noreferrer">Google Sheets</a>.</li>
           <li>Create a blank spreadsheet.</li>
-          <li>Name it <code>Gmail to Action Sheet</code>.</li>
+          <li>Name it <code>Gmail Manager</code>.</li>
           <li>Copy the Sheet ID from the URL.</li>
         </ol>
         <p>The Sheet ID is the long value between <code>/d/</code> and <code>/edit</code>:</p>
@@ -568,9 +568,9 @@ OUTPUT_CSV_FILE=output_action_list.csv</code></pre>
 
       <footer>
         <p>
-          Gmail to Action Sheet is an open-source MVP by Qorvia Systems.
+          Gmail Manager is an open-source MVP by Cordyn Systems.
           For customization, pilot implementation, or business workflow
-          adaptation, contact: qorviasystems@gmail.com
+          adaptation, open an issue on the public repository.
         </p>
       </footer>
     </main>
