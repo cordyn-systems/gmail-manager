@@ -328,4 +328,4 @@ See the detailed local test plan:
 
 This repository is built as an open-source experiment for practical small-business process automation.
 
-For questions, ideas, or implementation discussion, open an issue on this repository.
+For customization, pilot implementation, or business workflow adaptation, contact: hello.cordyn.systems@gmail.com
